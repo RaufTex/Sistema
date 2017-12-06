@@ -1,0 +1,18 @@
+{% extends 'SistemaGestao/base.html' %}
+{% load i18n %}
+
+{% load bootstrap3 %}
+{% bootstrap_messages %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="intro-text">
+            <h2>{% trans "Bem-Vindo (a)" %}, {{ user.first_name }}</h2>
+            <span class="name">{% trans "Gestão de Espaço Físico do ICEB" %}</span>
+            <hr class="star-light">
+            <span class="skills">{% trans "Reserva de salas, auditórios e laboratórios para professores! <br> Consultas de recursos por todo corpo acadêmico da universidade" %}.</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

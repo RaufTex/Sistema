@@ -1,0 +1,26 @@
+[07/Nov/2017 13:27:44] DEBUG [django.db.backends:91] (0.005) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None
+[07/Nov/2017 13:27:44] DEBUG [django.db.backends:91] (0.001) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+[07/Nov/2017 13:27:52] INFO [django.server:124] "GET / HTTP/1.1" 200 9615
+[07/Nov/2017 13:28:03] DEBUG [django.db.backends:91] (0.034) SELECT DISTINCT "booking_booking"."name" FROM "booking_booking" ORDER BY "booking_booking"."name" DESC; args=()
+[07/Nov/2017 13:28:03] DEBUG [django.db.backends:91] (0.000) SELECT "booking_building"."id", "booking_building"."name" FROM "booking_building"; args=()
+[07/Nov/2017 13:28:03] DEBUG [django.db.backends:91] (0.000) SELECT "booking_place"."id", "booking_place"."name", "booking_place"."capacity", "booking_place"."building_id", "booking_place"."place_id", "booking_place"."tipo", "booking_place"."possui_projetor", "booking_place"."possui_quadro_branco", "booking_place"."possui_quadro_negro", "booking_place"."descricao" FROM "booking_place"; args=()
+[07/Nov/2017 13:28:03] DEBUG [django.db.backends:91] (0.004) SELECT "booking_building"."id", "booking_building"."name" FROM "booking_building" WHERE "booking_building"."id" = 1; args=(1,)
+[07/Nov/2017 13:28:03] DEBUG [django.db.backends:91] (0.000) SELECT "booking_building"."id", "booking_building"."name" FROM "booking_building" WHERE "booking_building"."id" = 1; args=(1,)
+[07/Nov/2017 13:28:03] DEBUG [django.db.backends:91] (0.000) SELECT "booking_building"."id", "booking_building"."name" FROM "booking_building" WHERE "booking_building"."id" = 1; args=(1,)
+[07/Nov/2017 13:28:03] DEBUG [django.db.backends:91] (0.000) SELECT "booking_building"."id", "booking_building"."name" FROM "booking_building" WHERE "booking_building"."id" = 1; args=(1,)
+[07/Nov/2017 13:28:03] DEBUG [django.db.backends:91] (0.000) SELECT "booking_building"."id", "booking_building"."name" FROM "booking_building" WHERE "booking_building"."id" = 1; args=(1,)
+[07/Nov/2017 13:28:03] INFO [django.server:124] "GET /booking/searchbookingg/ HTTP/1.1" 200 11587
+[07/Nov/2017 13:28:05] INFO [django.server:124] "GET /?showLoginModal=yes HTTP/1.1" 200 9615
+[07/Nov/2017 13:28:08] INFO [django.server:124] "GET / HTTP/1.1" 200 9615
+[07/Nov/2017 13:28:10] DEBUG [django.db.backends:91] (0.001) SELECT DISTINCT "booking_booking"."name" FROM "booking_booking" ORDER BY "booking_booking"."name" DESC; args=()
+[07/Nov/2017 13:28:10] DEBUG [django.db.backends:91] (0.000) SELECT "booking_building"."id", "booking_building"."name" FROM "booking_building"; args=()
+[07/Nov/2017 13:28:10] DEBUG [django.db.backends:91] (0.000) SELECT "booking_place"."id", "booking_place"."name", "booking_place"."capacity", "booking_place"."building_id", "booking_place"."place_id", "booking_place"."tipo", "booking_place"."possui_projetor", "booking_place"."possui_quadro_branco", "booking_place"."possui_quadro_negro", "booking_place"."descricao" FROM "booking_place"; args=()
+[07/Nov/2017 13:28:10] DEBUG [django.db.backends:91] (0.000) SELECT "booking_building"."id", "booking_building"."name" FROM "booking_building" WHERE "booking_building"."id" = 1; args=(1,)
+[07/Nov/2017 13:28:10] DEBUG [django.db.backends:91] (0.000) SELECT "booking_building"."id", "booking_building"."name" FROM "booking_building" WHERE "booking_building"."id" = 1; args=(1,)
+[07/Nov/2017 13:28:10] DEBUG [django.db.backends:91] (0.000) SELECT "booking_building"."id", "booking_building"."name" FROM "booking_building" WHERE "booking_building"."id" = 1; args=(1,)
+[07/Nov/2017 13:28:10] DEBUG [django.db.backends:91] (0.000) SELECT "booking_building"."id", "booking_building"."name" FROM "booking_building" WHERE "booking_building"."id" = 1; args=(1,)
+[07/Nov/2017 13:28:10] DEBUG [django.db.backends:91] (0.000) SELECT "booking_building"."id", "booking_building"."name" FROM "booking_building" WHERE "booking_building"."id" = 1; args=(1,)
+[07/Nov/2017 13:28:10] INFO [django.server:124] "GET /booking/searchbookingg/ HTTP/1.1" 200 11587

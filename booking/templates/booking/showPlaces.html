@@ -1,0 +1,44 @@
+{% extends 'SistemaGestao/base.html' %}
+
+{% load i18n %}
+{% load bootstrap3 %}
+{% bootstrap_messages %}
+
+{% block title %} {% trans "New Place" %} {% endblock %}
+
+
+{% block content %}
+	<div class="row">
+		<div class="col-xs-8 col-sm-6 col-md-6 col-md-offset-3 col-xs-offset-2 col-sm-offset-3">
+		<h1 class="text-center">{% trans "Place Summary" %}</h1>
+		<div class="panel panel-default">
+			<div class="panel-heading">{% trans "Place" %}: {{Place.name}} </div>
+			<div class="panel-body">
+			<p>{% trans "Place" %}: {{Place.name}}</p>
+
+			</div>
+			<table class="table">
+			{% for place in places %}
+				<tr>
+					<td>
+					{{ place.capacity }}
+					</td>
+
+				</tr>
+				{% endfor %}
+				<!--<tr>
+					<td colspan="2">
+						<a class="btn btn-info btn-block btn-password" href="{% url "booking:cancelbooking" booking.pk %}"
+                  id="button-cancel">
+						{% trans "Cancel" %}</a>
+					</td>
+					<td colspan="2">
+						<a class="btn btn-info btn-block btn-password" href="{% url "booking:confirmbooking" booking.pk %}"
+                  data-toggle="modal" id="button-confirm">{% trans "Confirm" %}</a>
+					</td>
+				</tr>-->
+			</table>
+		</div>
+		</div>
+	</div>
+{% endblock %}

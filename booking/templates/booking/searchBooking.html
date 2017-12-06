@@ -1,0 +1,172 @@
+{% extends 'SistemaGestao/base.html' %}
+
+{% load i18n %}
+{% load bootstrap3 staticfiles booking_handling %}
+{% bootstrap_messages %}
+
+{% block extrastyle %}
+  <link rel="stylesheet" href="{% static "plugins/datatables/jquery.dataTables.css" %}">
+  <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static "plugins/datatables/extensions/Responsive/css/dataTables.responsive.css" %}">
+{% endblock %}
+
+{% block title %}{% trans "My Bookings" %}{% endblock %}
+{% block content %}
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-10 col-md-offset-1 col-sm-offset-1">
+      <h1 class="text-center">{{ name }}</h1>
+      <hr class="star-light">
+      <div>
+        <table id="my_bookings" class="table table-striped table-bordered " cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th>{% trans "Status" %}</th>
+                {% if name|is_all_bookings %}
+                <th>{% trans "Responsible" %}</th>
+                {% endif %}
+                <th>{% trans "Name" %}</th>
+                <th>{% trans "Place" %}</th>
+                <th>{% trans "Period" %}</th>
+                <th>{% trans "Weekdays" %}</th>
+                <th>{% trans "Timetable" %}</th>
+                <th class="all">{% trans "Actions" %}</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for booking in bookings %}
+              <tr>
+                <td>
+                  <span class="glyphicon {{booking|status_glyphicon}}" aria-hidden="true"></span>
+                </td>
+                {% if name|is_all_bookings %}
+                <td>{{ booking.user.first_name }}</td>
+                {% endif %}
+                <td>{{ booking.name }}</td>
+                <td>{{ booking.place }}</td>
+                <td class="text-center">{{ booking.start_date }}
+                  <br>{% trans " to " %}<br>
+                  {{ booking.end_date }}
+                </td>
+                {% with booking|get_timetable as timetable %}
+                <td class="text-center">
+                  {% for day in timetable %}
+                    {{ day.0  }}<br>
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for day in timetable %}
+                    {{ day.0  }}: <br>{{ day.1.0|date:"H:i" }} - {{ day.1.1|date:"H:i" }} <br>
+                  {% endfor %}
+                </td>
+                {% endwith %}
+                <td>
+                    <button class="btn btn-danger" data-href="{% url 'booking:deletebooking' booking.id %}"
+                        data-href2="{% url 'booking:showbooktimes' booking.id %}"
+                        data-toggle="modal" data-target="#modalDeleteBooking" id="delete-booking">
+                        <span class="glyphicon glyphicon-trash" ></span> {% trans "Delete" %}
+                    </button>
+                    <br><br>
+                    <a href="{% url 'booking:bookingdetails' booking.id %}" class="btn btn-primary" id="booking-details">
+                        <span class="	glyphicon glyphicon-list-alt" ></span> {% trans "Detalhes" %}
+                    </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          <thead>
+            <tr>
+              <th>{% trans "Status" %}</th>
+
+              <th>{% trans "Name" %}</th>
+              <th>{% trans "Place" %}</th>
+              <th>{% trans "Period" %}</th>
+              <th>{% trans "Weekdays" %}</th>
+              <th>{% trans "Timetable" %}</th>
+              <th class="all">{% trans "Actions" %}</th>
+            </tr>
+          </thead>
+        </table>
+
+          <!-- Modal -->
+          <div class="modal fade" id="modalDeleteBooking" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="dialog">
+              <div class="modal-content">
+                <div class="modal-header delete-header">
+                  <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <p class="modal-title" id="myModalLabel">{% trans "Confirm booking deletion" %}</p>
+                </div>
+                <div class="modal-body delete-body">
+                  <p>{% trans "Are you sure you want to delete this booking?" %}</p>
+                </div>
+                <div class="modal-footer delete-footer">
+                   <a class="btn btn-danger btn-ok" id="action-delete">
+                    {% trans "Delete Entire Booking" %}</a>
+                    <a class="btn btn-danger btn-ok-booktime" id="action-delete-booktime">
+                     {% trans "Delete Specific Booking" %}</a>
+                  <a class="btn btn-default" data-dismiss="modal">{% trans "Cancel" %}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extrajs %}
+<!-- DataTables -->
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/extensions/Responsive/js/responsive.bootstrap.min.js' %}"></script>
+<!-- page script -->
+<script>
+$('#modalDeleteBooking').on('show.bs.modal', function(e) {
+    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    $(this).find('.btn-ok-booktime').attr('href', $(e.relatedTarget).data('href2'));
+});
+  $(function () {
+
+    var table = $('#my_bookings').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "language": {
+                "url": "{% static 'plugins/datatables/Portuguese-Brasil.json' %}"
+      }
+    });
+
+    // Apply the filtering
+    table.columns().every( function () {
+        var that = this;
+
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+    new $.fn.dataTable.Responsive(table, {
+      details: {
+                display: $.fn.dataTable.Responsive.display.modal( {
+                    header: function ( row ) {
+                        var data = row.data();
+                        var closing = '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+                        return '<h2><i class="fa fa-fw fa-calendar-check-o"></i> Detalhes'+closing+'</h2>';
+                    }
+                } ),
+                renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                    tableClass: 'table'
+                } )
+            }
+    } );
+  });
+
+</script>
+{% endblock %}

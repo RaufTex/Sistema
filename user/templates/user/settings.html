@@ -1,0 +1,45 @@
+{% extends 'SistemaGestao/base.html' %}
+
+{% load i18n %}
+{% load bootstrap3 %}
+{% load bootstrap3 staticfiles %}
+{% block title %}{% trans "New User" %}{% endblock %}
+
+{% block content %}
+    <div class="row">
+      <div class="col-xs-8 col-sm-6 col-md-6 col-md-offset-3 col-xs-offset-2 col-sm-offset-3">
+        <h1 class="text-center">{% trans "Settings" %}</h1>
+        <hr class="star-light">
+        <div class="form-content">
+           <form class="form-horizontal" method = 'POST'>
+                {% csrf_token %}
+                {% bootstrap_form form_settings %}
+                {% buttons %}
+                    <button class="btn btn-info btn-block" type = 'submit'>{% trans "Register" %}</button>
+                {% endbuttons %}
+            </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'jquery/ui/jquery-ui.min.css' %}" />
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+$(document).ready(function () {
+
+  $('.datepicker1').datepicker({
+			inline: true,
+			useCurrent: true,
+			autoclose: true,
+	});
+
+    $.datepicker.setDefaults( $.datepicker.regional[ "{{ LANGUAGE_CODE|default:"" }}" ] )
+});
+</script>
+<script src= "{% static 'jquery/ui/datepicker-pt-BR.js' %}"></script>
+<script src= "{% static 'jquery/ui/jquery-ui.min.js' %}"></script>
+{% endblock %}
